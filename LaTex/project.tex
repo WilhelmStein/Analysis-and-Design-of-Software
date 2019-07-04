@@ -2,6 +2,7 @@
 \usepackage[greek,english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{alphabeta}
+\usepackage{graphicx}
 
 \begin{document}
 % \sffamily
@@ -30,7 +31,19 @@
 \section{Δομημένη Ανάλυση}
 	\subsection{Γενικό Διάγραμμα Ροής Δεδομένων}
 
-	\subsection{}
+		\subsection*{Παραδοχές}
+		\begin{itemize}
+			\item Το ΧΑΑ προμηθεύει το σύστημα E-Broker με όλα τα δεδομένα των μετοχών που διατίθενται προς αγοραπωλησία.
+			\item Το ΧΑΑ ενημερώνει το σύστημα E-Broker περί της διαθεσιμότητας του (σε περίπτωση αργίας), αλλά και όλων των μετοχών που διατίθεται προς αγοραπωλησία
+		\end{itemize}
+
+		Τα 2 παραπάνω συνοψίζονται στο βέλος "Δεδομένα Μετοχών".
+
+		\begin{figure}[!h]
+			\includegraphics[width=\linewidth]{../Structured_Analysis/General_Diagram.png}
+		\end{figure}
+
+	\subsection{Διάγραμμα Ροής Δεδομένων Επιπέδου 1}
 
 \newpage
 \section{Επίλογος}

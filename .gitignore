@@ -1,6 +1,4 @@
-*
+# *
 
-!project.tex
-!README.md
-!.gitignore
-!*.md
+LaTex/*
+!LaTex/project.tex
