@@ -99,39 +99,39 @@
 authorize_user
 
 IF user_authorized = true
-	parse_command
+  parse_command
 
-	IF command_is_valid = true
-		authorize_payment_with_bank
+  IF command_is_valid = true
+    authorize_payment_with_bank
 
-		IF payment_is_valid = true
-			send_command_data_to_xaa
+    IF payment_is_valid = true
+      send_command_data_to_xaa
 
-			IF command_is_accepted = true
+	  IF command_is_accepted = true
 
-				// Asynchronous behaviour
+	  // Asynchronous behaviour
 
-				await_for_xaa_execution_response
-				.then({
-					IF response_is_error = true
-						send_xaa_execution_error_to_client
-					ELSE
-						send_client_xaa_report
-						calculate_commission
-						update_client_portfolio
-				})
-
-			ELSE
-				send_xaa_error_to_client
-
+	  await_for_xaa_execution_response
+	  .then({
+		IF response_is_error = true
+		  send_xaa_execution_error_to_client
 		ELSE
-			send_payment_error_to_client
+		  send_client_xaa_report
+		  calculate_commission
+		  update_client_portfolio
+	  })
 
-	ELSE
-		send_parse_error_to_client
+	  ELSE
+	    send_xaa_error_to_client
+
+    ELSE
+      send_payment_error_to_client
+
+  ELSE
+    send_parse_error_to_client
 
 ELSE
-	send_authorization_error_to_client
+  send_authorization_error_to_client
 
 redirect_to_ui
 
