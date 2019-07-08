@@ -4,6 +4,7 @@
 \usepackage{alphabeta}
 \usepackage{graphicx}
 \usepackage[margin=1in]{geometry}
+\usepackage{listings}
 
 \begin{document}
 % \sffamily
@@ -94,7 +95,31 @@
 
 \newpage
 \subsection{Προδιαγραφή διαδικασίας διαβίβασης εντολής σε Δομημένα Αγγλικά}
+\begin{lstlisting}
+process_command
 
+IF command_is_valid = true
+	authorize_payment_with_bank
+
+	IF payment_is_valid = true
+		send_command_data_to_xaa
+
+		IF command_is_accepted = true
+			get_xaa_report
+			send_client_xaa_report
+			calculate_commission
+			update_client_file
+
+		ELSE
+			send_error_to_client
+
+	ELSE
+		send_error_to_client
+
+ELSE
+	send_error_to_client
+
+\end{lstlisting}
 
 \newpage
 \subsection{Προδιαγραφή διαδικασίας υπολογισμού προμήθειας σε Πίνακα Απόφασης}
