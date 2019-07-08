@@ -102,7 +102,7 @@
 \addtolength\tabcolsep{5pt}
 \begin{tabular}{ ||c|ccc|| } 
 	 \hline
-	 Όγκος Μετοχών & 0 - O1 & O1 - O2 & O2 - O3 \\
+	 Όγκος Μετοχών & 0 - O1 & O1 - O2 & $>$ O2 \\
 	 \hline
 	 Προμήθεια & Π1\% & Π2\% & Π3\%\\  
 	 \hline
@@ -112,9 +112,18 @@
 \subsection{Προδιαγραφή διαδικασίας σύνδεσης του πελάτη στο σύστημα σε Δένδρο Απόφασης}
 
 \begin{figure}[!h]
-	\includegraphics[width=11cm]{../Structured_Analysis/Decision_Tree.png}
+	\includegraphics[width=\linewidth]{../Structured_Analysis/Decision_Tree.png}
 \end{figure}
 
+\subsection{Προδιαγραφή Λεξικού Δεδομένων αναφοράς εκκαθάρισης εντολής}
+\begin{itemize}
+\item Αναφορά = Αναλυτική παράθεση πράξεων αγοράς ή πώλησης + Γενικό σύνολο όγκου αγοράς + 
+Συνολικό πλήθος μετοχών + Προμήθεια χρηματιστικής εταιρίας
+\item Αναλυτική παράθεση πράξεων αγοράς ή πώλησης = \{Επωνυμία μετοχών + Είδος πράξης + Τιμή
+ + Χρόνος + Αριθμοί τίτλων μετοχών + Πλήθος μετοχών + Συνολικό τίμημα\}
+\item Είδος πράξης = [Αγορά, Πώληση]
+\item Χρόνος = Ημερομηνία + Ώρα
+\end{itemize}
 
 \newpage
 \section{Επίλογος}
