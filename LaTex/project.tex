@@ -96,28 +96,44 @@
 \newpage
 \subsection{Προδιαγραφή διαδικασίας διαβίβασης εντολής σε Δομημένα Αγγλικά}
 \begin{lstlisting}
-process_command
+authorize_user
 
-IF command_is_valid = true
-	authorize_payment_with_bank
+IF user_authorized = true
+	parse_command
 
-	IF payment_is_valid = true
-		send_command_data_to_xaa
+	IF command_is_valid = true
+		authorize_payment_with_bank
 
-		IF command_is_accepted = true
-			get_xaa_report
-			send_client_xaa_report
-			calculate_commission
-			update_client_file
+		IF payment_is_valid = true
+			send_command_data_to_xaa
+
+			IF command_is_accepted = true
+
+				// Asynchronous behaviour
+
+				await_for_xaa_execution_response
+				.then({
+					IF response_is_error = true
+						send_xaa_execution_error_to_client
+					ELSE
+						send_client_xaa_report
+						calculate_commission
+						update_client_portfolio
+				})
+
+			ELSE
+				send_xaa_error_to_client
 
 		ELSE
-			send_error_to_client
+			send_payment_error_to_client
 
 	ELSE
-		send_error_to_client
+		send_parse_error_to_client
 
 ELSE
-	send_error_to_client
+	send_authorization_error_to_client
+
+redirect_to_ui
 
 \end{lstlisting}
 
