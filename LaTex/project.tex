@@ -26,8 +26,17 @@
 \newpage
 \section{Εισαγωγή}
 	Στα πλαίσια αυτής της εργασίας, θα σχεδιάσουμε μια εφαρμογή Ιστού για τη διαβίβαση εντολών αγοράς και πώλησης μετοχών μιας εταιρίας.
-	Αρχικά, θα μελετήσουμε τις απαιτήσεις του παραπάνω συστήματος με τη χρήση μεθόδων δομημένης ανάλυσης.
-
+	Καθώς η σχεδίαση ενός συστήματος είναι θέμα αμφιλεγόμενο, θεωρήσαμε φρόνιμο να μην υπάρξει καταμερισμός εργασίας, καθώς η ενασχόληση
+	όλων των μελών της ομάδας με όλα τα θέματα οδηγεί σε καλύτερα αποτελέσματα. Η συνεργασία μας επιτυγχάνεται μέσω τηλεδιασκέψεων μερικές
+	φορές την εβδομάδα και την ευθύνη ολοκλήρωσης και υποβολής του τελικού κειμένου αναλαμβάνει ο Ιωάννης Χείλαρης - sdi1500176. Παραδοχές που
+	έχουμε κάνει υπάρχουν στις ενότητες τις οποίες αφορούν.
+  \\\\
+	Η εργασία χωρίζεται σε 3 κεφάλαια, κάθε ένα απο τα οποία εμπεριέχει ενότητες οι οποίες αντιστοιχούν στα ερωτήματα της εργασίας. Στο κεφάλαιο
+	"Δομημένη Ανάλυση", χρησιμοποιώντας τις τεχνικές δομημένης ανάλυσης μελετούμε και σχεδιάζουμε την εφαρμογή του E-Broker. Επειτα, στο κεφάλαιο
+	"Ζητούμενα UML", αναλύουμε περεταίρω την εφαρμογή μέσω σεναρίων επιτυχίας, διαγραμμάτων περιπτώσεων χρήσης, κλάσσεων, καταστάσεων, δραστηριοτήτων κ.α.
+	Τέλος, στο κεφάλαιο "Δομημένος Σχεδιασμός", δεδομένου ενός διαγράμματος ροής δεδομένων χτίζουμε το διάγραμμα δομής προγράμματος και τον ψευδοκώδικα του προγράμματος.
+	
+  
 	
 \newpage
 \section{Δομημένη Ανάλυση}
@@ -151,7 +160,6 @@ redirect_to_ui
 \end{center}
 
 \subsection{Προδιαγραφή διαδικασίας σύνδεσης του πελάτη στο σύστημα σε Δένδρο Απόφασης}
-
 \begin{figure}[!h]
 	\includegraphics[width=\linewidth]{../Structured_Analysis/Decision_Tree.png}
 \end{figure}
@@ -174,9 +182,79 @@ redirect_to_ui
 	\includegraphics[width=12cm]{../Structured_Analysis/Decomposition_tree.png}
 \end{figure}
 
+
+\newpage
+\section{Ζητούμενα UML}
+\subsection{Διάγραμμα περιπτώσεων χρήσης}
+\begin{figure}[!h]
+	\includegraphics[width=\linewidth]{../UML/Use_Case_Diagram.png}
+\end{figure}
+
+\newpage
+\section{Δομημένος Σχεδιασμός}
+\subsection*{Δοθέν Διάγραμμα Ροής Δεδομένων}
+\begin{figure}[!h]
+	\includegraphics[width=\linewidth]{../Structured_Design/drd.png}
+\end{figure}
+
+\subsection{Διάγραμμα Δομής Προγράμματος}
+\begin{figure}[!h]
+	\includegraphics[width=14cm]{../Structured_Design/ddp.png}
+\end{figure}
+
+\newpage
+\subsection{Ψευδοκώδικας Προγράμματος}
+\subsubsection{Ψευδοκώδικας μονάδας ελέγχου Κεντρικού Μετασχηματισμού}
+\begin{lstlisting}[mathescape]
+Procedure ExecM4_5
+  Local Var K, $\Lambda$, P, Z, T, $\Sigma$, $\Pi$, $\Psi$
+  Initialize K, $\Lambda$, P, Z, T, $\Sigma$, $\Pi$, $\Psi$
+  Call GetT(T)
+  Call ExecM1(Z)
+  Call ExecM2(K, $\Lambda$,  $\Pi$)
+  Call ExecM3($\Sigma$)
+  Call CalculateM4(K, $\Lambda$, P, Z, T, $\Psi$)
+  Call CalculateM5(P, $\Sigma$, $\Pi$)
+  Call ExecM6($\Psi$, $\Pi$)
+End_Procedure
+\end{lstlisting}
+
+\subsubsection{Ψευδοκώδικας μονάδας ελέγχου Μετασχηματισμού Μ3}
+\begin{lstlisting}[mathescape]
+Procedure ExecM3($\Sigma$: In\Out)
+  Local Var $\Delta$, $\Sigma$, I
+  Initialize $\Delta$, $\Sigma$, I
+  Call CalculateM3($\Delta$: In, $\Sigma$, I: In\Out)
+  Call PutI(I)
+End_Procedure
+\end{lstlisting}
+
+\subsubsection{Ψευδοκώδικας μονάδας υπολογισμού Μετασχηματισμού Μ4}
+\begin{lstlisting}[mathescape]
+Procedure CalculateM4(K, $\Lambda$, Z, T: In, $\Psi$: In\Out )
+  Local Var K, $\Lambda$, Z, T, $\Psi$
+  Initialize K, $\Lambda$, Z, T, $\Psi$
+  Calculate $\Psi$
+End_Procedure
+\end{lstlisting}
+
+\subsubsection{Ψευδοκώδικας μονάδας παρουσίασης Μετασχηματισμού Μ2}
+\begin{lstlisting}[mathescape]
+Procedure GetA(A: In\Out)
+  Local Var A
+  Initialize A
+  Read A
+End_Procedure
+
+Procedure GetB(B: In\Out)
+  Local Var B
+  Initialize B
+  Read B
+End_Procedure
+\end{lstlisting}
+
 \newpage
 \section{Επίλογος}
-
 
 
 \end{document}
