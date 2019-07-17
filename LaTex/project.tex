@@ -77,12 +77,8 @@
 				\item Πιστοποίηση πληρότητας στοιχείων χρήστη.
 			\end{itemize}
 		
-		\item 3.2 Πληρωμή
-			\begin{itemize}
-				\item Διεκπεραίωση συναλλαγής με την τράπεζα.
-			\end{itemize}
 
-		\item 3.3 Επικοινωνία ΧΑΑ:
+		\item 3.2 Επικοινωνία ΧΑΑ:
 			\begin{itemize}
 				\item Αποστολή εντολής στο ΧΑΑ.
 				\item Συλλογή απόκρισης (Αποδοχή / Απόρριψη) από ΧΑΑ.
@@ -90,7 +86,7 @@
 				\item Διαβίβαση πληροφορίας σε άλλες διεργασίες και σε πελάτη.
 			\end{itemize}
 
-		\item 3.4 Ενημέρωση Μερίδων:
+		\item 3.3 Ενημέρωση Μερίδων:
 		\begin{itemize}
 			\item Υπολογισμός προμήθειας και λοιπών οικονομικών στοιχείων.
 			\item Ενημέρωση μερίδας τίτλων πελάτη.
@@ -111,30 +107,25 @@ IF user_authorized = true
   parse_command
 
   IF command_is_valid = true
-    authorize_payment_with_bank
 
-    IF payment_is_valid = true
-      send_command_data_to_xaa
+	send_command_data_to_xaa
 
-	  IF command_is_accepted = true
+	IF command_is_accepted = true
 
-	  // Asynchronous behaviour
+	// Asynchronous behaviour
 
-	  await_for_xaa_execution_response
-	  .then({
-		IF response_is_error = true
-		  send_xaa_execution_error_to_client
-		ELSE
-		  send_client_xaa_report
-		  calculate_commission
-		  update_client_portfolio
+	await_for_xaa_execution_response
+	.then({
+	  IF response_is_error = true
+	  	send_xaa_execution_error_to_client
+	  ELSE
+	  	send_client_xaa_report
+	  	calculate_commission
+	  	update_client_portfolio
 	  })
 
-	  ELSE
-	    send_xaa_error_to_client
-
-    ELSE
-      send_payment_error_to_client
+	ELSE
+	  send_xaa_error_to_client
 
   ELSE
     send_parse_error_to_client
@@ -205,6 +196,45 @@ redirect_to_ui
 \begin{figure}[!h]
 	\includegraphics[width=\linewidth]{../UML/state_diagram.png}
 \end{figure}
+
+\subsection{Κύριο Σενάριο Επιτυχίας (ΚΣΕ) και Εναλλακτικά Σενάρια}
+
+\subsubsection{{ΚΣΕ}}
+\begin{enumerate}
+	\item Ο χρήστης επιλέγει αγορά ή πώληση από το radio button. 
+	\item Το σύστημα ανάλογα με την επιλογή του χρήστη, εμφανίζει όλες τις διαθέσιμες μετοχές.
+	\item Ο χρήστης επιλέγει την επιθυμητή μετοχή.
+	\item Ο χρήστης πληκτρολογεί τα στοιχεία της συναλλαγής (τιμή, χρόνος-στόχος, πλήθος, κλπ).
+	\item Ο χρήστης επιβεβαιώνει την εντολή.
+	\item Το σύστημα παρουσιάζει πληροφορίες τιμολόγησης.
+	\item Ο χρήστης επιβεβαιώνει τη συναλλαγή.
+	\item Το σύστημα στέλνει την εντολή στο ΧΑΑ.
+	\item Το ΧΑΑ αποδέχεται την εντολή.
+	\item Το σύστημα εγκρίνει την αγορά και ενημερώνει τον χρήστη.
+	\item Επιστροφή στο βήμα 1.
+	\item Κάποια στιγμή στο μέλλον, το ΧΑΑ ολοκληρώνει τη συναλλαγή και στέλνει την αναφορά εκκαθάρισης.
+	\item Το σύστημα ανακτά την αναφορά.
+	\item Το σύστημα ενημερώνει τη μερίδα του πελάτη.
+	\item Το σύστημα ενημερώνει τον πελάτη για την ολοκλήρωση της συναλλαγής.
+\end{enumerate}
+
+\subsubsection{{Εναλλακτικά Σενάρια}}
+
+4α. Ο πελάτης πληκτρολόγησε λανθασμένα/αδύνατα στοιχεία συναλλαγής
+\begin{enumerate}
+	\item Το σύστημα τυπώνει κάποιου είδους error message.
+	\item Επιστροφή στο βήμα 4.
+\end{enumerate}
+7α. Ο πελάτης δεν έχει αρκετά χρήματα στο υπόλοιπό του (αν πρόκειται για αγορά)
+\begin{enumerate}
+	\item Το σύστημα τυπώνει κάποιου είδους error message.
+	\item Επιστροφή στο βήμα 4.
+\end{enumerate}
+9α. Το ΧΑΑ απορρίπτει την εντολή.
+\begin{enumerate}
+	\item Το σύστημα τυπώνει κάποιου είδους error message.
+	\item Επιστροφή στο βήμα 1.
+\end{enumerate}
 
 \newpage
 \section{Δομημένος Σχεδιασμός}
